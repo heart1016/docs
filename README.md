@@ -43,3 +43,5 @@
 
 - [ ] Vim
 - [ ] Emacs
+
+!> {{getJson()}}
