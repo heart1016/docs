@@ -7,4 +7,4 @@
 > 去更远的地方 见更亮的光
 
 [GitHub](https://github.com/docsifyjs/docsify/)
-[Get Started](#简介)
+[Get Started](#计划)
