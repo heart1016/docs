@@ -30,7 +30,7 @@
 
 这里以 `Windows 11` 为例
 
-安装网址 [点我跳转](https://git-scm.com/) `https://git-scm.com`
+[安装网址](https://git-scm.com/)
 
 ![123](./img/Snipaste_2022-07-18_23-30-01.png)
 
