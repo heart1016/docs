@@ -239,6 +239,146 @@ To https://github.com/heart1016/demo.git
 这样就推送到云端 可以去网页上查看一下
 
 ![123](./img/2022-07-23_221315.png)
+## 拉取 (pull)
+当多个人在同一分支上开发时 别人提交了代码 你就可以用这个命令更新下来
+```bash
+ζ git pull                                                                                                                       [fa85957]
+已经是最新的。
+# hack@hack: ~/demo <main ✔ >                                                                                                   (18:32:31)
+ζ
+```
+因为这个代码没有其它人上传 所以现在是最新的状态
+
+## 更新 (fetch)
+这个命令的作用和pull 很像 作用也差不多 区别就是 pull  是直接更新远端的代码到本地 并与本地的修改合并 而fetch 是分成了两步 fetch 更新 merge 合并 这个时候 与 pull 是等价的
+当前 文件是这个样子 我去网页上改下 再执行fetch
+```bash
+ζ ls                                                                                                                             [66d61bb]
+README.md
+# hack@hack: ~/demo <main ✔ >                                                                                                   (19:31:53)
+ζ cat README.md                                                                                                                  [66d61bb]
+# 这是我的第一个git 仓库
+123
+456
+789
+
+# hack@hack: ~/demo <main ✔ >                                                                                                   (19:33:41)
+ζ git fetch                                                                                                                      [66d61bb]
+remote: Enumerating objects: 5, done.
+remote: Counting objects: 100% (5/5), done.
+remote: Compressing objects: 100% (2/2), done.
+remote: Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+展开对象中: 100% (3/3), 691 字节 | 691.00 KiB/s, 完成.
+来自 https://github.com/heart1016/demo
+   66d61bb..ecb311c  main       -> origin/main
+# hack@hack: ~/demo <main ✔ >                                                                                                   (19:33:45)
+ζ cat README.md                                                                                                                  [66d61bb]
+# 这是我的第一个git 仓库
+123
+456
+789
+# hack@hack: ~/demo <main ✔ >                                                                                                   (19:33:50)
+ζ git merge                                                                                                                      [66d61bb]
+更新 66d61bb..ecb311c
+Fast-forward
+ README.md | 1 +
+ 1 file changed, 1 insertion(+)
+# hack@hack: ~/demo <main ✔ >                                                                                                   (19:33:58)
+ζ cat README.md                                                                                                                  [ecb311c]
+# 这是我的第一个git 仓库
+123
+456
+789
+000
+# hack@hack: ~/demo <main ✔ >                                                                                                   (19:34:01)
+ζ
+```
+当执行了fetch  之后 看文件并没有 000 这个 只是单纯的更新 merge  之后 本地与云端文件合并 这个时候就有了000
+接下来看一下 如果你在修改这个文件 并且这个文件更新 与之冲突
+```bash
+diff --git a/README.md b/README.md
+index 05df009..5fdf93b 100644
+--- a/README.md
++++ b/README.md
+@@ -3,3 +3,4 @@
+ 456
+ 789
+ 000
++888
+# 加了888 在本地 线上加了999 接下来更新 更新之前需要把本地的修改储存起来
+ git stash                                                                                                                      [ecb311c]
+保存工作目录和索引状态 WIP on main: ecb311c Update README.md
+# hack@hack: ~/demo <main ✔ >                                                                                                   (19:39:36)
+ζ
+ζ git status .                                                                                                                   [ecb311c]
+位于分支 main
+您的分支与上游分支 'origin/main' 一致。
+
+无文件要提交，干净的工作区
+# hack@hack: ~/demo <main ✔ >                                                                                                   (19:39:54)
+ζ
+# 此时的状态就恢复到了最新的样子 你的修改并没有丢失 可以用git stash list 查看
+git stash list
+stash@{0}: WIP on main: ecb311c Update README.md
+ζ git fetch                                                                                                                      [ecb311c]
+remote: Enumerating objects: 5, done.
+remote: Counting objects: 100% (5/5), done.
+remote: Compressing objects: 100% (2/2), done.
+remote: Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+展开对象中: 100% (3/3), 697 字节 | 697.00 KiB/s, 完成.
+来自 https://github.com/heart1016/demo
+   ecb311c..c31b62f  main       -> origin/main
+# hack@hack: ~/demo <main ✔ >                                                                                                   (19:41:25)
+ζ git merge                                                                                                                      [ecb311c]
+更新 ecb311c..c31b62f
+Fast-forward
+ README.md | 1 +
+ 1 file changed, 1 insertion(+)
+# hack@hack: ~/demo <main ✔ >                                                                                                   (19:41:34)
+ζ git stash pop                                                                                                                  [c31b62f]
+自动合并 README.md
+冲突（内容）：合并冲突于 README.md
+贮藏条目被保留以备您再次需要。
+# hack@hack: ~/demo <main ✘ [=]>                                                                                                (19:41:41)
+ζ
+ζ git status .                                                                                                                   [c31b62f]
+位于分支 main
+您的分支与上游分支 'origin/main' 一致。
+
+未合并的路径：
+  （使用 "git restore --staged <文件>..." 以取消暂存）
+  （使用 "git add <文件>..." 标记解决方案）
+        双方修改：   README.md
+
+修改尚未加入提交（使用 "git add" 和/或 "git commit -a"）
+# hack@hack: ~/demo <main ✘ [=]>                                                                                                (19:42:49)
+ζ
+# 此时提示文件冲突 打开文件解决冲突
+ζ cat README.md                                                                                                                  [c31b62f]
+# 这是我的第一个git 仓库
+123
+456
+789
+000
+'<<<<<<< Updated upstream'
+999
+=======
+888
+'>>>>>>> Stashed changes'
+
+# 选择要保留的 并删除不想要的 我把888 和 999 都保留 重新提交
+
+ζ cat README.md                                                                                                                  [c31b62f]
+# 这是我的第一个git 仓库
+123
+456
+789
+000
+999
+888
+# hack@hack: ~/demo <main ✘ [=]>                                                                                                (19:46:38)
+ζ
+```
 
 ## 日志 (log)
 Git 提交历史一般常用两个命令
@@ -260,3 +400,58 @@ git blame README.md
 ^fa85957 (hack              2022-07-23 22:04:22 +0800 1) # 这是我的第一个git 仓库
 00000000 (Not Committed Yet 2022-07-23 23:06:33 +0800 2) 12
 ```
+
+## 切换 (checkout)
+可以恢复文件到此次最新状态 或是 用于分支切换和创建 这个后面讲
+```bash
+git checkout . # 恢复当前路径下的所有改动文件到此次最新
+git checkout [file] [dir] [path] # 可以是一个或多个文件 或是文件夹 或路径都可以
+
+# hack@hack: ~/demo <main ✘ [*]>                                                                                                (18:29:34)
+ζ git status .                                                                                                                   [fa85957]
+位于分支 main
+您的分支与上游分支 'origin/main' 一致。
+
+尚未暂存以备提交的变更：
+  （使用 "git add <文件>..." 更新要提交的内容）
+  （使用 "git restore <文件>..." 丢弃工作区的改动）
+        修改：     README.md
+
+修改尚未加入提交（使用 "git add" 和/或 "git commit -a"）
+# hack@hack: ~/demo <main ✘ [*]>                                                                                                (18:29:43)
+ζ cat README.md                                                                                                                  [fa85957]
+# 这是我的第一个git 仓库
+12
+# hack@hack: ~/demo <main ✘ [*]>                                                                                                (18:29:50)
+ζ git checkout .                                                                                                                 [fa85957]
+从索引区更新了 1 个路径
+# hack@hack: ~/demo <main ✔ >                                                                                                   (18:29:56)
+ζ git status .                                                                                                                   [fa85957]
+位于分支 main
+您的分支与上游分支 'origin/main' 一致。
+
+无文件要提交，干净的工作区
+# hack@hack: ~/demo <main ✔ >                                                                                                   (18:30:00)
+ζ cat README.md                                                                                                                  [fa85957]
+# 这是我的第一个git 仓库
+# hack@hack: ~/demo <main ✔ >                                                                                                   (18:30:06)
+ζ
+```
+
+## 比较 (diff)
+
+比较当前文件与版本库文件的差异
+
+```bash
+git diff [file] [path] # 默认不加文件名 是所有差异  可以比较单个文件 或路径
+ζ git diff .
+diff --git a/README.md b/README.md
+index 960abd4..e81e258 100644
+--- a/README.md
++++ b/README.md
+@@ -1 +1,2 @@
+ # 这是我的第一个git 仓库
++123
+(END)
+```
+
