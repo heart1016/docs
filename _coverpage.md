@@ -6,4 +6,4 @@
 > 去更远的地方 见更亮的光
 
 [GitHub](https://github.com/heart1016/docs.git)
-[Get Started](#计划)
+[Get Started](#目录)

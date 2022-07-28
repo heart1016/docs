@@ -1,14 +1,4 @@
 # 基本操作
-> 命令总结
-
- | 命令                       | 说明                                |
- | -------------------------- | ----------------------------------- |
- | [git init](#初始化-init)   | 初始化仓库                          |
- | [git clone](#克隆-clone)   | 拷贝一份远程仓库 也就是下载一个项目 |
- | [git status](#状态-status) | 查看仓库当前的状态 显示有变更的文件 |
- | [git add](#添加-add)       | 添加文件到暂存区                    |
- | [git commit](#提交-commit) | 提交暂存区到本地仓库                |
- | [git push](#推送-push)     | 推送代码到远端                      |
 
 首先来到 [GitHub](https://github.com/) 网站注册账号 国内无法访问可以用 [Gitee](https://gitee.com/)
 
@@ -130,9 +120,6 @@ git status 命令用于查看在你上次提交之后是否有对文件进行再
 ζ git status -s                                                                                                                  [fa85957]
  M README.md
 # hack@hack: ~/demo <main ✘ [*]>                                                                                                (22:25:51)
-ζ
-```
-```bash
 ζ git status
 位于分支 main
 
@@ -180,7 +167,9 @@ git commit 命令将暂存区内容添加到本地仓库中
 ```bash
 git commit -m [message] # -m 此次提交的备注信息
 git commit -a #  只提交已在版本库中的修改
+git commit --amend  #修改最后一次提交的信息
 ```
+
 ```bash
 # hack@hack: ~/demo <main ✘ [+]>                                                                                                (22:03:56)
 ζ git commit -m "first"
@@ -204,6 +193,7 @@ git commit -a #  只提交已在版本库中的修改
 
 ```bash
 #　此时已经提交成功`-m` 是提交的备注信息 可以用`git status` 查看下文件的状态
+
 # hack@hack: ~/demo <main ✔ >                                                                                                   (22:05:26)
 ζ git status .                                                                                                                   [fa85957]
 位于分支 main
@@ -219,6 +209,7 @@ git commit -a #  只提交已在版本库中的修改
 # 接下来 演示-a 的使用方法 创建一个test.md 文件 对README.md 进行了修改 执行commit -a 看看会发生什么
 ζ ls                                                                                                                             [9391489]
 README.md  test.md
+
 # hack@hack: ~/demo <main ✘ [*?]>                                                                                               (21:17:53)
 ζ git status .                                                                                                                   [9391489]
 位于分支 main
@@ -234,9 +225,8 @@ README.md  test.md
         test.md
 
 修改尚未加入提交（使用 "git add" 和/或 "git commit -a"）
-# hack@hack: ~/demo <main ✘ [*?]>                                                                                               (21:17:56)
-ζ
 
+# hack@hack: ~/demo <main ✘ [*?]>                                                                                               (21:17:56)
 ζ git commit -am "add test.md"                                                                                                   [9391489]
 [main 687f3ef] add test.md
  Committer: hack <hack@hack.localdomain>
@@ -251,6 +241,7 @@ README.md  test.md
     git commit --amend --reset-author
 
  1 file changed, 1 deletion(-)
+
 # hack@hack: ~/demo <main ✘ [?]>                                                                                                (21:21:05)
 ζ git status .                                                                                                                   [687f3ef]
 位于分支 main
@@ -264,6 +255,7 @@ README.md  test.md
 提交为空，但是存在尚未跟踪的文件（使用 "git add" 建立跟踪）
 # hack@hack: ~/demo <main ✘ [?]>                                                                                                (21:21:12)
 ζ
+
 # 此时已经成功提交到本地了  但是test.md 并没有提交
 ```
 ```bash
@@ -294,7 +286,7 @@ add test.md 123
 ## 推送 (push)
 git push 命令用于从将本地的分支版本上传到远程并合并
 ```bash
-git push <远程主机名> <本地分支名>:<远程分支名> # 默认git push 是推送到默认分支上
+git push <远程主机名> <本地分支名>:<远程分支名> # 默认git push 是推送到当前分支上
 git push <远程主机名> <本地分支名> # 如果本地分支名与远程分支名相同，则可以省略冒号：
 ```
 此时的文件只是提交到了本地成功了  还并没有提交到云端
@@ -317,10 +309,13 @@ To https://github.com/heart1016/demo.git
 ## 拉取 (pull)
 当多个人在同一分支上开发时 别人提交了代码 你就可以用这个命令更新下来
 ```bash
+git pull # 默认拉取当前分支
+git fetch --all # 强制拉取覆盖
+```
+```bash
+# hack@hack: ~/demo <main ✔ >                                                                                                   (18:32:31)
 ζ git pull                                                                                                                       [fa85957]
 已经是最新的。
-# hack@hack: ~/demo <main ✔ >                                                                                                   (18:32:31)
-ζ
 ```
 因为这个代码没有其它人上传 所以现在是最新的状态
 
@@ -365,12 +360,14 @@ Fast-forward
 456
 789
 000
-# hack@hack: ~/demo <main ✔ >                                                                                                   (19:34:01)
-ζ
 ```
+
 当执行了fetch  之后 看文件并没有 000 这个 只是单纯的更新 merge  之后 本地与云端文件合并 这个时候就有了000
 接下来看一下 如果你在修改这个文件 并且这个文件更新 与之冲突
+
 ```bash
+# hack@hack: ~/demo <main ✔ >                                                                                                   (19:34:01)
+ζ git diff
 diff --git a/README.md b/README.md
 index 05df009..5fdf93b 100644
 --- a/README.md
@@ -380,20 +377,22 @@ index 05df009..5fdf93b 100644
  789
  000
 +888
+
 # 加了888 在本地 线上加了999 接下来更新 更新之前需要把本地的修改储存起来
- git stash                                                                                                                      [ecb311c]
-保存工作目录和索引状态 WIP on main: ecb311c Update README.md
 # hack@hack: ~/demo <main ✔ >                                                                                                   (19:39:36)
-ζ
+ζ git stash                                                                                                                      [ecb311c]
+保存工作目录和索引状态 WIP on main: ecb311c Update README.md
+
+# hack@hack: ~/demo <main ✔ >                                                                                                   (19:39:36)
 ζ git status .                                                                                                                   [ecb311c]
 位于分支 main
 您的分支与上游分支 'origin/main' 一致。
 
 无文件要提交，干净的工作区
-# hack@hack: ~/demo <main ✔ >                                                                                                   (19:39:54)
-ζ
+
 # 此时的状态就恢复到了最新的样子 你的修改并没有丢失 可以用git stash list 查看
-git stash list
+# hack@hack: ~/demo <main ✔ >                                                                                                   (19:39:54)
+ζ git stash list
 stash@{0}: WIP on main: ecb311c Update README.md
 ζ git fetch                                                                                                                      [ecb311c]
 remote: Enumerating objects: 5, done.
@@ -403,19 +402,21 @@ remote: Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
 展开对象中: 100% (3/3), 697 字节 | 697.00 KiB/s, 完成.
 来自 https://github.com/heart1016/demo
    ecb311c..c31b62f  main       -> origin/main
+
 # hack@hack: ~/demo <main ✔ >                                                                                                   (19:41:25)
 ζ git merge                                                                                                                      [ecb311c]
 更新 ecb311c..c31b62f
 Fast-forward
  README.md | 1 +
  1 file changed, 1 insertion(+)
+
 # hack@hack: ~/demo <main ✔ >                                                                                                   (19:41:34)
 ζ git stash pop                                                                                                                  [c31b62f]
 自动合并 README.md
 冲突（内容）：合并冲突于 README.md
 贮藏条目被保留以备您再次需要。
+
 # hack@hack: ~/demo <main ✘ [=]>                                                                                                (19:41:41)
-ζ
 ζ git status .                                                                                                                   [c31b62f]
 位于分支 main
 您的分支与上游分支 'origin/main' 一致。
@@ -426,9 +427,9 @@ Fast-forward
         双方修改：   README.md
 
 修改尚未加入提交（使用 "git add" 和/或 "git commit -a"）
-# hack@hack: ~/demo <main ✘ [=]>                                                                                                (19:42:49)
-ζ
 # 此时提示文件冲突 打开文件解决冲突
+
+# hack@hack: ~/demo <main ✘ [=]>                                                                                                (19:42:49)
 ζ cat README.md                                                                                                                  [c31b62f]
 # 这是我的第一个git 仓库
 123
@@ -460,23 +461,112 @@ Git 提交历史一般常用两个命令
 ```bash
 git log # 查看历史提交记录
 git blame <file> # 以列表形式查看指定文件的历史修改记录
+git log -n 3 # 该选项通常用于限制输出 这个命令只显示该项目的最后3次提交
+git log --oneline # 每行一个输出 SHA的前七个字符和提交信息
+git log --stat # 日志命令显示被修改的文件 它还显示行数和已更新的总记录的摘要行
+git log -p # 显示被修改的文件 它还显示添加 删除和更新的行的位置
+git log --graph # 以图表形式查看日志
+git log --after="yy-mm-dd" or --before #通过日期和时间来过滤输出
+git log --author="Author name" # 按特定用户过滤提交
+git log --grep=" Commit message."# 通过提交信息来过滤提交内容
 ```
 在使用 Git 提交了若干更新之后 又或者克隆了某个项目 想回顾下提交历史 我们可以使用 git log 命令查看
 ```bash
-git log
+# hack@hack: ~/demo <test ✘ [?]>                                                                                                          (23:13:30)
+ζ git log
 commit fa85957ecda67e9feb304b417add361df16a1ef8 (HEAD -> main)
 Author: hack <hack@hack.localdomain>
 Date:   Sat Jul 23 22:04:22 2022 +0800
 
     first
 
-git blame README.md
-
+# hack@hack: ~/demo <test ✘ [?]>                                                                                                          (23:13:30)
+ζ git blame README.md
 ^fa85957 (hack              2022-07-23 22:04:22 +0800 1) # 这是我的第一个git 仓库
 00000000 (Not Committed Yet 2022-07-23 23:06:33 +0800 2) 12
+
+# hack@hack: ~/demo <test ✘ [?]>                                                                                                          (23:13:30)
+ζ git log --oneline
+da20311 (HEAD -> test, main) add test.md
+9391489 (origin/main) first
+c31b62f Update README.md
+ecb311c Update README.md
+66d61bb first
+0de9caa Update README.md
+d25c43e Update README.md
+fa85957 first
+
+# hack@hack: ~/demo <test ✘ [?]>                                                                                                          (23:13:30)
+ζ git log --stat
+commit da203118cfc5481badca69e872f8871f4f100c73 (HEAD -> test, main)
+Author: hack <hack@hack.localdomain>
+Date:   Sun Jul 24 21:21:05 2022 +0800
+
+    add test.md
+
+ README.md | 1 -
+ 1 file changed, 1 deletion(-)
+
+commit 9391489f52635557de32038e120670512fa69ccb (origin/main)
+Author: hack <hack@hack.localdomain>
+Date:   Sun Jul 24 19:49:00 2022 +0800
+
+    first
+
+
+# hack@hack: ~/demo <test ✘ [?]>                                                                                                          (23:13:30)
+ζ git log -p
+commit da203118cfc5481badca69e872f8871f4f100c73
+Author: hack <hack@hack.localdomain>
+Date:   Sun Jul 24 21:21:05 2022 +0800
+
+    add test.md
+
+diff --git a/README.md b/README.md
+index 6f888d9..f4b2f13 100644
+--- a/README.md
++++ b/README.md
+@@ -4,4 +4,3 @@
+ 789
+ 000
+ 999
+-888
+
+commit 9391489f52635557de32038e120670512fa69ccb
+Author: hack <hack@hack.localdomain>
+Date:   Sun Jul 24 19:49:00 2022 +0800
+
+    first
+
+diff --git a/README.md b/README.md
+index f4b2f13..6f888d9 100644
+--- a/README.md
++++ b/README.md
+@@ -4,3 +4,4 @@
+ 789
+ 000
+ 999
++888
+
+commit c31b62f6789cdfdd790b6eb356a8714494b07837
+Author: 寂寞奔跑 <heart10162115@foxmail.com>
+Date:   Sun Jul 24 19:37:18 2022 +0800
+
+    Update README.md
+
+diff --git a/README.md b/README.md
+index 05df009..f4b2f13 100644
+--- a/README.md
++++ b/README.md
+@@ -3,3 +3,4 @@
+ 456
+ 789
+ 000
++999
+
 ```
 
-## 切换 (checkout)
+## 检出 (checkout)
 可以恢复文件到此次最新状态 或是 用于分支切换和创建 这个后面讲
 ```bash
 git checkout . # 恢复当前路径下的所有改动文件到此次最新
@@ -539,3 +629,153 @@ index 960abd4..e81e258 100644
 (END)
 ```
 
+## 储存 (stash)
+
+开发过程中经常会遇难功能还没有开发完 需要解决其它bug 可能是当前分支 也可能是其它分支 这时候这个就有用处了 未开发完的肯定是不建议提交的 所以这个命令可以把你的修改存储起来 并将代码恢复到本次最新状态
+
+```bash
+git stash  # 存储当前所有修改  并恢复到最新
+git stash save "message" # 指定存储信息
+git stash pop # 取出一个 默认是最后一个 下标0 pop 可以跟上 stash@{0} 指定下标
+git stash list # 列表查看
+git stash show # 查个修改变化 -p显示变化的具体内容
+git stash apply # 与pop类似 但并不像pop 取出后删除存储 默认下标0
+git stash drop # 删除一个存储 默认下标0 可以指定下标
+git stash clear # 清空存储
+git stash branch [分支名] # 把修改存储到一个新的分支上
+```
+
+```bash
+# hack@hack: ~/demo <main ✘ [*?]>                                                                                                         (23:00:12)
+ζ git status .                                                                                                                             [da20311]
+位于分支 main
+您的分支领先 'origin/main' 共 1 个提交。
+  （使用 "git push" 来发布您的本地提交）
+
+尚未暂存以备提交的变更：
+  （使用 "git add <文件>..." 更新要提交的内容）
+  （使用 "git restore <文件>..." 丢弃工作区的改动）
+        修改：     README.md
+
+未跟踪的文件:
+  （使用 "git add <文件>..." 以包含要提交的内容）
+        file
+        test.md
+
+修改尚未加入提交（使用 "git add" 和/或 "git commit -a"）
+# hack@hack: ~/demo <main ✘ [*?]>                                                                                                         (23:00:21)
+ζ git stash                                                                                                                                [da20311]
+保存工作目录和索引状态 WIP on main: da20311 add test.md
+# hack@hack: ~/demo <main ✘ [?]>                                                                                                          (23:00:24)
+ζ git status .                                                                                                                             [da20311]
+位于分支 main
+您的分支领先 'origin/main' 共 1 个提交。
+  （使用 "git push" 来发布您的本地提交）
+
+未跟踪的文件:
+  （使用 "git add <文件>..." 以包含要提交的内容）
+        file
+        test.md
+
+提交为空，但是存在尚未跟踪的文件（使用 "git add" 建立跟踪）
+# hack@hack: ~/demo <main ✘ [?]>                                                                                                          (23:00:27)
+ζ git stash list
+stash@{0}: WIP on main: da20311 add test.md
+
+
+# hack@hack: ~/demo <main ✘ [?]>                                                                                                          (23:01:20)
+ζ git stash pop                                                                                                                            [da20311]
+位于分支 main
+您的分支领先 'origin/main' 共 1 个提交。
+  （使用 "git push" 来发布您的本地提交）
+
+尚未暂存以备提交的变更：
+  （使用 "git add <文件>..." 更新要提交的内容）
+ζ git stash save "hello world"                                                                                                             [da20311]
+保存工作目录和索引状态 On main: hello world
+# hack@hack: ~/demo <main ✘ [?]>                                                                                                          (23:01:59)
+ζ git stash list
+stash@{0}: On main: hello world
+
+ζ git status .                                                                                                                             [da20311]
+位于分支 main
+您的分支领先 'origin/main' 共 1 个提交。
+  （使用 "git push" 来发布您的本地提交）
+
+未跟踪的文件:
+  （使用 "git add <文件>..." 以包含要提交的内容）
+        file
+        test.md
+
+提交为空，但是存在尚未跟踪的文件（使用 "git add" 建立跟踪）
+# hack@hack: ~/demo <main ✘ [?]>                                                                                                          (23:02:48)
+ζ git stash pop                                                                                                                            [da20311]
+位于分支 main
+您的分支领先 'origin/main' 共 1 个提交。
+  （使用 "git push" 来发布您的本地提交）
+
+尚未暂存以备提交的变更：
+  （使用 "git add <文件>..." 更新要提交的内容）
+  （使用 "git restore <文件>..." 丢弃工作区的改动）
+        修改：     README.md
+
+未跟踪的文件:
+  （使用 "git add <文件>..." 以包含要提交的内容）
+        file
+        test.md
+
+修改尚未加入提交（使用 "git add" 和/或 "git commit -a"）
+丢弃了 refs/stash@{0}（bfc04fcbecd8c0609582e7b3104381ed215e5890）
+# hack@hack: ~/demo <main ✘ [*?]>                                                                                                         (23:02:51)
+ζ
+```
+
+## 重置 (reset)
+ 重置版本 默认重置到最新的提交 也可以重置到指定版本
+```bash
+# hack@hack: ~/demo <main ✘ [?]>                                                                                                          (23:20:45)
+ζ git status                                                                                                                             [da20311]
+位于分支 main
+您的分支领先 'origin/main' 共 1 个提交。
+  （使用 "git push" 来发布您的本地提交）
+
+尚未暂存以备提交的变更：
+  （使用 "git add <文件>..." 更新要提交的内容）
+  （使用 "git restore <文件>..." 丢弃工作区的改动）
+        修改：     README.md
+
+未跟踪的文件:
+  （使用 "git add <文件>..." 以包含要提交的内容）
+        file
+        test.md
+
+
+ζ git reset                                                                                                                                [da20311]
+重置后取消暂存的变更：
+M       README.md
+
+ζ git log
+commit da203118cfc5481badca69e872f8871f4f100c73 (HEAD -> hello, test, main)
+Author: hack <hack@hack.localdomain>
+Date:   Sun Jul 24 21:21:05 2022 +0800
+
+    add test.md
+
+commit 9391489f52635557de32038e120670512fa69ccb (origin/main)
+Author: hack <hack@hack.localdomain>
+Date:   Sun Jul 24 19:49:00 2022 +0800
+
+    first
+
+commit c31b62f6789cdfdd790b6eb356a8714494b07837
+Author: 寂寞奔跑 <heart10162115@foxmail.com>
+Date:   Sun Jul 24 19:37:18 2022 +0800
+
+ζ git reset fa85957ecda67e9feb304b417add361df16a1ef8
+
+commit fa85957ecda67e9feb304b417add361df16a1ef8 (HEAD -> main, hello)
+Author: hack <hack@hack.localdomain>
+Date:   Sat Jul 23 22:04:22 2022 +0800
+
+    first
+```
