@@ -9,7 +9,3 @@
 * 进阶
 
   * [分支管理](git/branch)
-
-* 参考
-
-  * [链接](git/reference)
