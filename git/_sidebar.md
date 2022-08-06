@@ -2,12 +2,14 @@
 
 * 入门
 
-  * [安装与配置](git/setup)
-
-  * [工作流程](git/process)
+  * [安装](git/setup)
 
   * [基本操作](git/basic_operations)
 
 * 进阶
 
-  * [分支管理](git/branch.md)
+  * [分支管理](git/branch)
+
+* 参考
+
+  * [链接](git/reference)

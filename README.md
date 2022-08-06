@@ -9,28 +9,47 @@
 
 - [ ] Python
     - [ ] Django
-- [ ] Html/Css
+    - [ ] Flask
+    - [ ] Scrapy
+    - [ ] Pandas
+    - [ ] NumPy
+- [ ] Html
+- [ ] Css
 - [ ] Javascript
     - [ ] Vue
     - [ ] React
     - [ ] JQuery
+    - [ ] TypeScript
+    - [ ] ECharts
+    - [ ] NodeJs
+    - [ ] ES6
 - [ ] C
 - [ ] C++
 - [ ] C#
 - [ ] Java
 - [ ] Go
 - [ ] Shell
+- [ ] Ruby
+- [ ] Perl
+- [ ] Lua
 
 > 数据库
 
 - [ ] Mysql
+- [ ] PostgreSQL
+- [ ] SQL Server
+- [ ] SQLite
+- [ ] Oracle
 - [ ] MongoDB
 - [ ] Redis
+- [ ] Memcached
 
 > WEB服务器
 
 - [ ] Nginx
 - [ ] Apache
+- [ ] Tomcat
+- [ ] IIs
 
 > 操作系统
 
