@@ -9,3 +9,5 @@
 * 进阶
 
   * [分支管理](git/branch)
+  * [标签](git/tag)
+  * [配置](git/config)

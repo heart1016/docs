@@ -273,7 +273,7 @@ git add . # 添加当前目录下的所有文件到暂存区
 git commit 命令将暂存区内容添加到本地仓库中
 
 ```bash
-git commit -m [message] # -m 此次提交的备注信息
+git commit -m [message] # -m 此次提交的备注信息 如不加则调用git默认编辑器 请看此小节最后
 git commit -a #  只提交已在版本库中的修改
 git commit --amend  #修改最后一次提交的信息
 ```

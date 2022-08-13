@@ -48,7 +48,6 @@
 
 - [ ] Nginx
 - [ ] Apache
-- [ ] Tomcat
 - [ ] IIs
 
 > 操作系统
