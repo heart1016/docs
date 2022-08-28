@@ -11,3 +11,4 @@
   * [分支管理](git/branch)
   * [标签](git/tag)
   * [配置](git/config)
+  * [别名](git/alias)
